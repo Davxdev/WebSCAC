@@ -175,6 +175,21 @@
     .hidden {
       display: none !important;
     }
+    /* Estilos para los botones de destinatarios únicos */
+    .recipient-btn {
+      background: none;
+      border: none;
+      color: #4f8cff;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1em;
+      padding: 0;
+      margin: 0;
+    }
+    .recipient-btn:hover {
+      text-decoration: underline;
+      color: #2563eb;
+    }
     @media (max-width: 900px) {
       .main-content {
         padding: 1rem;
@@ -258,6 +273,9 @@
         <button type="submit">Buscar</button>
       </form>
       <ul id="recipientMessages"></ul>
+      <hr>
+      <h3>Destinatarios a los que he enviado mensajes</h3>
+      <ul id="uniqueRecipientsList"></ul>
     </section>
   </main>
   <script>
@@ -265,6 +283,8 @@
     function showSection(sectionId) {
       document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
       document.getElementById(sectionId).classList.remove('hidden');
+      // Si es la sección de buscar, cargar destinatarios únicos
+      if (sectionId === 'buscar') fetchUniqueRecipients();
     }
 
     // Navegación visual de la barra lateral
@@ -334,6 +354,32 @@
         ul.appendChild(li);
       });
     };
+
+    // Obtener destinatarios únicos y mostrarlos
+    async function fetchUniqueRecipients() {
+      const res = await fetch('/api/messages/recipients');
+      const data = await res.json();
+      const ul = document.getElementById('uniqueRecipientsList');
+      ul.innerHTML = '';
+      data.forEach(recipient => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.textContent = recipient;
+        btn.className = 'recipient-btn';
+        btn.onclick = () => {
+          // Al hacer click, ir a la sección de enviar y rellenar el campo destinatario
+          showSection('enviar');
+          document.querySelector('.sidebar nav a[href="#enviar"]').classList.add('active');
+          document.querySelectorAll('.sidebar nav a').forEach(l => {
+            if (l.getAttribute('href') !== '#enviar') l.classList.remove('active');
+          });
+          document.getElementById('recipients').value = recipient;
+          document.getElementById('recipients').focus();
+        };
+        li.appendChild(btn);
+        ul.appendChild(li);
+      });
+    }
 
     // Mostrar solo la sección de Enviar al cargar
     showSection('enviar');

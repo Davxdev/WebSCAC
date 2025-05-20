@@ -44,3 +44,16 @@ export const deleteMessage = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, error: 'Error al eliminar el mensaje' });
   }
 };
+
+export const getUniqueRecipients = async (req: Request, res: Response) => {
+  try {
+    const messages = await MessageModel.find({}, 'recipients');
+    const allRecipients = messages
+      .map(msg => msg.recipients.split(',').map(r => r.trim()))
+      .flat();
+    const uniqueRecipients = [...new Set(allRecipients)];
+    res.json(uniqueRecipients);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener destinatarios' });
+  }
+};
