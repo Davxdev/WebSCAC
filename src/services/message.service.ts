@@ -4,6 +4,7 @@ import amqplib from 'amqplib';
 import { Dropbox } from 'dropbox';
 import fs from 'fs';
 import fetch from 'node-fetch';
+import { io } from '../index';
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
@@ -78,6 +79,14 @@ export const uploadFileAndSendMessage = async (
     // Actualizar estado a 'sent'
     newMessage.status = 'sent';
     await newMessage.save();
+
+     // Notificación en tiempo real
+    io.emit('new_message', {
+      recipients,
+      message,
+      fileUrl,
+      status: 'sent'
+    });
 
     console.log(`Mensaje publicado en RabbitMQ y guardado como 'sent'`);
     return newMessage;

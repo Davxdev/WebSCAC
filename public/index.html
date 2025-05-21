@@ -6,36 +6,41 @@
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6fb;
+      background: linear-gradient(120deg, #e0e7ff 0%, #f4f6fb 100%);
       margin: 0;
       padding: 0;
       min-height: 100vh;
       display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
     }
     .sidebar {
-      width: 230px;
+      width: 260px;
       background: linear-gradient(180deg, #4f8cff 0%, #38b6ff 100%);
       color: #fff;
-      min-height: 100vh;
+      height: 100vh;
       padding: 2.5rem 1.2rem 2rem 1.2rem;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      z-index: 10;
-      box-shadow: 2px 0 12px rgba(79,140,255,0.13);
+      position: relative;
+      box-shadow: 2px 0 18px rgba(79,140,255,0.18);
       border-right: 2px solid #e3eaf5;
+      z-index: 10;
+      transition: width 0.2s;
     }
     .sidebar h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.7rem;
+      font-weight: 800;
       margin-bottom: 2.5rem;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      background: linear-gradient(90deg, #fff 0%, #dbeafe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .sidebar nav {
       display: flex;
@@ -46,84 +51,114 @@
     .sidebar nav a {
       color: #fff;
       text-decoration: none;
-      font-size: 1.08rem;
-      font-weight: 500;
-      padding: 0.4rem 0.7rem;
-      border-radius: 5px;
-      transition: background 0.18s, box-shadow 0.18s;
+      font-size: 1.12rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 7px;
+      transition: background 0.18s, box-shadow 0.18s, color 0.18s;
       display: block;
+      letter-spacing: 0.5px;
+      position: relative;
     }
-    .sidebar nav a:hover, .sidebar nav a.active {
-      background: rgba(255,255,255,0.13);
-      box-shadow: 0 2px 8px rgba(44,62,80,0.10);
+    .sidebar nav a.active, .sidebar nav a:hover {
+      background: rgba(255,255,255,0.18);
+      color: #e0e7ff;
+      box-shadow: 0 2px 12px rgba(44,62,80,0.13);
+      font-weight: 700;
     }
     .main-content {
-      margin-left: 230px;
-      width: 100%;
-      max-width: 700px;
-      padding: 2.5rem 2.5rem 2.5rem 2.5rem;
-      background: #fff;
+      flex: 1 1 0;
+      width: 0;
+      max-width: 100vw;
+      padding: 2.5rem 3.5rem 2.5rem 3.5rem;
+      background: rgba(255,255,255,0.95);
       min-height: 100vh;
       box-sizing: border-box;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-      margin-top: 0;
-      margin-bottom: 0;
-      border-radius: 0 16px 16px 0;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+      margin: 0;
+      border-radius: 0 24px 24px 0;
       border-left: 2px solid #e3eaf5;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      overflow-y: auto;
+      transition: padding 0.2s;
     }
     section {
       background: #f9fafb;
       border: 1.5px solid #e3eaf5;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(44,62,80,0.07);
-      padding: 1.5rem 1.5rem 1rem 1.5rem;
+      border-radius: 18px;
+      box-shadow: 0 2px 18px rgba(44,62,80,0.09);
+      padding: 2rem 2rem 1.2rem 2rem;
       margin-bottom: 2.2rem;
-      transition: box-shadow 0.2s;
+      transition: box-shadow 0.2s, border 0.2s;
+      position: relative;
+    }
+    section:before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #4f8cff 60%, #38b6ff 100%);
+      border-radius: 50%;
+      opacity: 0.07;
+      z-index: 0;
     }
     h2 {
-      color: #2a3b4c;
+      color: #2563eb;
       margin-top: 0.5rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
+      margin-bottom: 1.2rem;
+      font-weight: 700;
       letter-spacing: 0.5px;
+      font-size: 1.4rem;
+      position: relative;
+      z-index: 1;
     }
     form {
       margin-bottom: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.7rem;
+      gap: 0.9rem;
+      z-index: 1;
+      position: relative;
     }
     input[type="text"], input[type="file"] {
-      padding: 0.6rem;
+      padding: 0.7rem;
       border: 1.5px solid #d1d5db;
-      border-radius: 6px;
-      font-size: 1rem;
+      border-radius: 8px;
+      font-size: 1.08rem;
       background: #f9fafb;
       transition: border 0.2s, box-shadow 0.2s;
-      box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+      box-shadow: 0 1px 6px rgba(44,62,80,0.06);
     }
     input[type="text"]:focus {
       border: 1.5px solid #4f8cff;
       outline: none;
       background: #fff;
-      box-shadow: 0 2px 8px rgba(79,140,255,0.13);
+      box-shadow: 0 2px 12px rgba(79,140,255,0.13);
     }
     button {
       background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%);
       color: #fff;
       border: none;
-      border-radius: 6px;
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
-      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.8rem 1.4rem;
+      font-size: 1.08rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
       margin-top: 0.2rem;
-      box-shadow: 0 2px 8px rgba(79,140,255,0.10);
+      box-shadow: 0 2px 12px rgba(79,140,255,0.12);
+      letter-spacing: 0.5px;
     }
     button:hover {
       background: linear-gradient(90deg, #38b6ff 0%, #4f8cff 100%);
-      box-shadow: 0 4px 16px rgba(44,62,80,0.13);
+      box-shadow: 0 4px 18px rgba(44,62,80,0.15);
+      transform: translateY(-2px) scale(1.03);
     }
     ul {
       list-style: none;
@@ -133,44 +168,50 @@
     li {
       background: #fff;
       margin-bottom: 0.7rem;
-      padding: 0.8rem 1rem;
-      border-radius: 9px;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
       border: 1.5px solid #e3eaf5;
-      box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+      box-shadow: 0 2px 10px rgba(44,62,80,0.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
       word-break: break-word;
       transition: box-shadow 0.18s, border 0.18s;
+      position: relative;
     }
     li:hover {
-      box-shadow: 0 4px 16px rgba(44,62,80,0.13);
+      box-shadow: 0 4px 18px rgba(44,62,80,0.14);
       border: 1.5px solid #4f8cff;
     }
     .msg-content {
       flex: 1;
+      font-size: 1.08rem;
+      color: #374151;
     }
     .msg-file {
       margin-left: 1rem;
       color: #4f8cff;
       text-decoration: none;
-      font-size: 0.97em;
+      font-size: 1em;
       font-weight: 500;
+      transition: color 0.18s;
     }
     .msg-file:hover {
       text-decoration: underline;
+      color: #2563eb;
     }
     .delete-btn {
       background: none;
       border: none;
       color: #e74c3c;
-      font-size: 1.2em;
+      font-size: 1.3em;
       cursor: pointer;
-      margin-left: 0.7rem;
-      transition: color 0.18s;
+      margin-left: 0.9rem;
+      transition: color 0.18s, transform 0.1s;
     }
     .delete-btn:hover {
       color: #c0392b;
+      transform: scale(1.15);
     }
     .hidden {
       display: none !important;
@@ -178,42 +219,127 @@
     /* Estilos para los botones de destinatarios únicos */
     .recipient-btn {
       background: none;
-      border: none;
+      border: 1.5px solid #4f8cff;
       color: #4f8cff;
       cursor: pointer;
       font-weight: bold;
       font-size: 1em;
-      padding: 0;
-      margin: 0;
+      padding: 0.3em 0.9em;
+      margin: 0.2em 0;
+      border-radius: 6px;
+      transition: background 0.18s, color 0.18s, border 0.18s;
     }
     .recipient-btn:hover {
-      text-decoration: underline;
-      color: #2563eb;
+      background: #4f8cff;
+      color: #fff;
+      border: 1.5px solid #2563eb;
     }
-    @media (max-width: 900px) {
+    hr {
+      border: none;
+      border-top: 1.5px solid #e3eaf5;
+      margin: 1.5rem 0;
+    }
+    /* Notificación flotante centrada */
+    .custom-notif {
+      position: fixed;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg,#4f8cff 0%,#38b6ff 100%);
+      color: #fff;
+      padding: 1.1rem 2.5rem 1.1rem 3.2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 32px rgba(44,62,80,0.18);
+      font-weight: bold;
+      font-size: 1.13rem;
+      z-index: 9999;
+      opacity: 0.97;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 2px solid #fff;
+      animation: notif-pop 0.3s;
+    }
+    @keyframes notif-pop {
+      0% { transform: translateX(-50%) scale(0.8); opacity: 0.5; }
+      100% { transform: translateX(-50%) scale(1); opacity: 0.97; }
+    }
+    .notif-bell {
+      width: 28px;
+      height: 28px;
+      margin-right: 0.7rem;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* Campanita fija en la esquina superior derecha */
+    .corner-bell {
+      position: fixed;
+      top: 22px;
+      right: 32px;
+      z-index: 10000;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(44,62,80,0.13);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: box-shadow 0.18s, background 0.18s;
+      border: 2px solid #e3eaf5;
+    }
+    .corner-bell:hover {
+      background: #e0e7ff;
+      box-shadow: 0 4px 18px rgba(44,62,80,0.18);
+    }
+    .corner-bell svg {
+      width: 28px;
+      height: 28px;
+      fill: #4f8cff;
+      transition: fill 0.18s;
+    }
+    .corner-bell.has-notif svg {
+      fill: #ffb300;
+      animation: bell-shake 0.7s;
+    }
+    @keyframes bell-shake {
+      0% { transform: rotate(0deg);}
+      20% { transform: rotate(-18deg);}
+      40% { transform: rotate(15deg);}
+      60% { transform: rotate(-10deg);}
+      80% { transform: rotate(8deg);}
+      100% { transform: rotate(0deg);}
+    }
+    @media (max-width: 1100px) {
       .main-content {
-        padding: 1rem;
-        max-width: 100vw;
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+        border-radius: 0;
       }
       .sidebar {
-        width: 170px;
+        width: 180px;
         padding: 1.2rem 0.5rem;
       }
-      .main-content {
-        margin-left: 170px;
-      }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 800px) {
+      body {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        height: auto;
+      }
       .sidebar {
-        position: static;
         width: 100vw;
-        min-height: unset;
+        height: auto;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         padding: 0.7rem 1rem;
         box-shadow: none;
         border-right: none;
+        border-radius: 0;
+        position: static;
       }
       .sidebar h1 {
         font-size: 1.1rem;
@@ -229,6 +355,7 @@
         box-shadow: none;
         border-radius: 0;
         border-left: none;
+        min-height: unset;
       }
       section {
         border-radius: 8px;
@@ -278,7 +405,99 @@
       <ul id="uniqueRecipientsList"></ul>
     </section>
   </main>
+  <!-- Campanita fija en la esquina -->
+  <div class="corner-bell" id="cornerBell" title="Notificaciones">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2C9.243 2 7 4.243 7 7v2.071C5.282 10.165 4 12.388 4 15v2l-1 1v1h18v-1l-1-1v-2c0-2.612-1.282-4.835-3-5.929V7c0-2.757-2.243-5-5-5zm0 18c-1.104 0-2-.896-2-2h4c0 1.104-.896 2-2 2z"/>
+    </svg>
+    <!-- Panel de notificaciones oculto por defecto -->
+    <div id="notifListPanel" style="display:none; position:absolute; top:60px; right:0; width:340px; max-height:400px; overflow-y:auto; background:#fff; border-radius:14px; box-shadow:0 8px 32px rgba(44,62,80,0.18); border:2px solid #e3eaf5; z-index:10001;">
+      <div style="padding:1rem 1.2rem; border-bottom:1px solid #e3eaf5; font-weight:bold; color:#4f8cff;">Notificaciones</div>
+      <ul id="notifList" style="list-style:none; margin:0; padding:0; max-height:340px; overflow-y:auto;"></ul>
+      <div id="notifEmpty" style="padding:1rem; color:#888; text-align:center;">Sin notificaciones</div>
+    </div>
+  </div>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <script>
+    // --- SOCKET.IO NOTIFICACIONES ---
+    const socket = io();
+
+    // Historial de notificaciones
+    const notifHistory = [];
+
+    // Mostrar notificación centrada with campanita
+    function showCustomNotif(text) {
+      const notif = document.createElement('div');
+      notif.className = 'custom-notif';
+      notif.innerHTML = `
+        <svg class="notif-bell" viewBox="0 0 24 24">
+          <path d="M12 2C9.243 2 7 4.243 7 7v2.071C5.282 10.165 4 12.388 4 15v2l-1 1v1h18v-1l-1-1v-2c0-2.612-1.282-4.835-3-5.929V7c0-2.757-2.243-5-5-5zm0 18c-1.104 0-2-.896-2-2h4c0 1.104-.896 2-2 2z"/>
+        </svg>
+        <span>${text}</span>
+      `;
+      document.body.appendChild(notif);
+      setTimeout(() => {
+        notif.style.opacity = '0';
+        setTimeout(() => notif.remove(), 600);
+      }, 2800);
+    }
+
+    // Animar la campanita de la esquina
+    function animateCornerBell() {
+      const bell = document.getElementById('cornerBell');
+      bell.classList.add('has-notif');
+      setTimeout(() => bell.classList.remove('has-notif'), 1200);
+    }
+
+    // Agregar notificación al historial y actualizar panel
+    function addToNotifList(text) {
+      const notifList = document.getElementById('notifList');
+      const notifEmpty = document.getElementById('notifEmpty');
+      notifHistory.unshift({ text, date: new Date() });
+      // Limita a 30 notificaciones
+      if (notifHistory.length > 30) notifHistory.pop();
+      notifList.innerHTML = '';
+      notifHistory.forEach(n => {
+        const li = document.createElement('li');
+        li.style.padding = '0.9rem 1.2rem';
+        li.style.borderBottom = '1px solid #f0f4fa';
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.innerHTML = `
+          <svg class="notif-bell" style="width:20px;height:20px;margin-right:0.7rem;" viewBox="0 0 24 24">
+            <path d="M12 2C9.243 2 7 4.243 7 7v2.071C5.282 10.165 4 12.388 4 15v2l-1 1v1h18v-1l-1-1v-2c0-2.612-1.282-4.835-3-5.929V7c0-2.757-2.243-5-5-5zm0 18c-1.104 0-2-.896-2-2h4c0 1.104-.896 2-2 2z"/>
+          </svg>
+          <span style="flex:1">${n.text}</span>
+          <span style="color:#aaa; font-size:0.93em; margin-left:0.7em;">${n.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+        `;
+        notifList.appendChild(li);
+      });
+      notifEmpty.style.display = notifHistory.length ? 'none' : '';
+    }
+
+    // Notifica solo si el usuario es destinatario (si quieres filtrar, agrega lógica aquí)
+    socket.on('new_message', data => {
+      const text = `¡Nuevo mensaje para: ${data.recipients}! ${data.message}`;
+      showCustomNotif(text);
+      animateCornerBell();
+      addToNotifList(text);
+      // Opcional: recargar mensajes si estás en la sección
+      if (!document.getElementById('todos').classList.contains('hidden')) fetchMessages();
+    });
+
+    // Mostrar/ocultar panel de notificaciones al hacer click en la campanita
+    document.getElementById('cornerBell').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const panel = document.getElementById('notifListPanel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    });
+    // Ocultar panel si se hace click fuera
+    document.addEventListener('click', (e) => {
+      const panel = document.getElementById('notifListPanel');
+      const bell = document.getElementById('cornerBell');
+      if (!bell.contains(e.target)) panel.style.display = 'none';
+    });
+
     // Mostrar solo la sección activa
     function showSection(sectionId) {
       document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
@@ -301,7 +520,15 @@
 
     async function fetchMessages() {
       const res = await fetch('/api/messages');
-      const data = await res.json();
+      let data = await res.json();
+      // Ordenar del más reciente al más antiguo por fecha de creación (usa 'fecha', 'createdAt' o '_id')
+      data.sort((a, b) => {
+        const dateA = a.fecha ? new Date(a.fecha) : (a.createdAt ? new Date(a.createdAt) : a._id);
+        const dateB = b.fecha ? new Date(b.fecha) : (b.createdAt ? new Date(b.createdAt) : b._id);
+        if (dateA > dateB) return -1;
+        if (dateA < dateB) return 1;
+        return 0;
+      });
       const ul = document.getElementById('messages');
       ul.innerHTML = '';
       data.forEach(msg => {
