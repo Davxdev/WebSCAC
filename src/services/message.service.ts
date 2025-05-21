@@ -1,4 +1,3 @@
-// filepath: c:\Users\ASUS\Desktop\WebSCAC\src\services\message.service.ts
 import { MessageModel } from '../models/message.model';
 import amqplib from 'amqplib';
 import { Dropbox } from 'dropbox';
@@ -9,7 +8,7 @@ import { io } from '../index';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
 
-// Función genérica de reintentos
+// Función de reintentos
 async function retry<T>(fn: () => Promise<T>, maxRetries = MAX_RETRIES): Promise<T> {
   let lastError;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
